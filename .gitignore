@@ -1,0 +1,7 @@
+.space
+venv
+.idea
+__pycache__
+.env
+.vercel
+.json

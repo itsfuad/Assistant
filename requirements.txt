@@ -1,0 +1,12 @@
+pyTelegramBotAPI
+python-dotenv
+gtts
+praw
+python_weather
+pytz
+nltk
+numpy
+torch
+flask
+flask-cors
+waitress
