@@ -19,8 +19,7 @@ smtp_port = 587
 from_email = 'fuad@programmer.net'
 
 def sendEmail(recipient, subject, body, file_info=None, auto_reply=False):
-    to_email = recipient
-    subject = subject
+
     # send message and handle errors
     try:
         print('Logging in...')
@@ -38,7 +37,7 @@ def sendEmail(recipient, subject, body, file_info=None, auto_reply=False):
             msg = MIMEMultipart()
             msg['Subject'] = subject
             msg['From'] = from_email
-            msg['To'] = to_email
+            msg['To'] = recipient
             msg.attach(MIMEText(body))
             
             # loop through each file info and attach it to the message
@@ -49,7 +48,7 @@ def sendEmail(recipient, subject, body, file_info=None, auto_reply=False):
                 attachment.add_header('Content-Disposition', 'attachment', filename=filename)
                 msg.attach(attachment)
                     
-            session.sendmail(from_email, to_email, msg.as_string())
+            session.sendmail(from_email, recipient, msg.as_string())
 
             print('Email sent!')
 

@@ -1,6 +1,5 @@
 from threading import Thread
 from chat import getTag, getReplyFromTag
-#from replies import reply
 from bot import MY_CHAT_ID, bot
 from typing import Final
 from telebot import types
@@ -17,7 +16,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import re
-#import waitress
 
 #listen to the port
 
@@ -45,8 +43,7 @@ def after_request(response):
 def index():
     if (request.method == 'POST'):
         # not allowed
-        response = Response("Not allowed", status=403)
-        return response
+        return Response("Not allowed", status=403)
     else:
         return Response("I'm alive", status=200)
 
