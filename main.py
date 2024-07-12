@@ -29,6 +29,10 @@ print(client_url)
 
 cors: Final =  CORS(app, resources={r"/*": {"origins": client_url}})
 
+resNotAllowed = Response("Not allowed", status=403)
+resOk = Response("OK", status=200)
+resAlive = Response("I'm alive", status=200)
+
 #send cors headers for all routes.
 @app.after_request
 def after_request(response):
@@ -43,9 +47,9 @@ def after_request(response):
 def index():
     if (request.method == 'POST'):
         # not allowed
-        return Response("Not allowed", status=403)
+        return resNotAllowed
     else:
-        return Response("I'm alive", status=200)
+        return resAlive
 
 
 def send_message(message):
@@ -63,7 +67,7 @@ def contact():
 
         msg = f'New message from {name}\nEmail: {email}\nMessage: {message}'
         
-        resp = Response("OK", status=200)
+        resp = resOk
         # send the message to the bot
         send_message(msg)
 
@@ -73,7 +77,7 @@ def contact():
         print("Message relayed to bot from website")
         return resp
     else:
-        response = Response("Not allowed", status=403)
+        response = resNotAllowed
         return response
     
 
@@ -98,7 +102,7 @@ def sendDoc():
         file = files['file']
         Thread(target=sendDocuments, args=(file, file.filename)).start()
         print("Document relayed to bot from website")
-        return Response("OK", status=200)
+        return resOk
     
 
 # handle /visitor route
@@ -110,10 +114,10 @@ def visitor():
         message = params['message']
         bot.send_message(MY_CHAT_ID, message)
         print(message)
-        response = Response("OK", status=200)
+        response = resOk
         return response
     else:
-        response = Response("Not allowed", status=403)
+        response = resNotAllowed
         return response
     
 
